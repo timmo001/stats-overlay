@@ -6,7 +6,7 @@ import { type Metadata } from "next";
 export const metadata: Metadata = {
   title: "Stats Overlay",
   description: "An overlay for the statistics of your system and other sources",
-  icons: [{ rel: "icon", url: "/icon" }],
+  icons: [{ rel: "icon", url: "/icon.svg" }],
 };
 
 export default function RootLayout({

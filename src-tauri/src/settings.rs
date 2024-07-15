@@ -9,7 +9,6 @@ pub struct Settings {
     pub log_level: String,
 }
 
-
 fn create_settings() -> Settings {
     // Create settings from {config_path}\settings.json
     let settings = Settings {
