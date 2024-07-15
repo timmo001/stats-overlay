@@ -5,7 +5,7 @@
 await import("./src/env.js");
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const config = {
   eslint: {
     // ESLint is disabled during builds to avoid slowing down the build process.
     ignoreDuringBuilds: true,
@@ -20,4 +20,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default config;
