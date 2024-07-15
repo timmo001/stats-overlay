@@ -2,6 +2,7 @@ mod autostart;
 mod logger;
 mod settings;
 mod shared;
+mod stats;
 
 use tauri::{
     menu::{MenuBuilder, MenuItemBuilder, PredefinedMenuItem},
@@ -13,6 +14,7 @@ use crate::{
     autostart::setup_autostart,
     logger::setup_logger,
     settings::{get_settings, update_settings},
+    stats::get_stats,
 };
 
 #[tauri::command]
@@ -56,6 +58,7 @@ pub fn run() {
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![
             get_settings,
+            get_stats,
             set_window,
             update_settings
         ])

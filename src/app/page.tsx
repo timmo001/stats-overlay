@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
-// import { getCurrentWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 import { Settings } from "~/types/settings";
 import { Stats } from "~/types/stats";
@@ -25,31 +25,39 @@ export default function HomePage() {
   //   await getCurrentWindow().hide();
   // }
 
-  // async function showWindow(): Promise<void> {
-  //   console.log("Showing window");
-  //   await getCurrentWindow().show();
-  //   await invoke("set_window", {});
-  // }
+  async function showWindow(): Promise<void> {
+    console.log("Showing window");
+    const window = getCurrentWindow();
+    if (!window) {
+      console.error("Window not found");
+      return;
+    }
+
+    if (await window.isVisible()) {
+      console.log("Window already visible");
+      return;
+    }
+
+    await window.show();
+  }
 
   async function updateStats(): Promise<void> {
     console.log("Update stats");
 
-    const stats = await invoke("get_stats", {});
-
-    // const cpu = Math.floor(Math.random() * 100);
-    // const ram = Math.floor(Math.random() * 100);
-    // const gpu = Math.floor(Math.random() * 100);
-    // const fps = Math.floor(Math.random() * 100);
-
-    // setStats({ cpu, ram, gpu, fps });
+    const newStats = await invoke<Stats>("get_stats", {});
+    setStats(newStats);
+    console.log("New stats", newStats);
   }
 
   useEffect(() => {
     if (loadingState > LoadingState.NotLoaded) return;
+    showWindow().then(async () => {
+      await invoke("set_window", {});
+      console.log("Window set");
+    });
     setLoadingState(LoadingState.Loading);
-    invoke("set_window", {}).then(() => console.log("Window set"));
-    invoke("get_settings").then(async (s) => {
-      setSettings(s as Settings);
+    invoke<Settings>("get_settings").then(async (newSettings: Settings) => {
+      setSettings(newSettings);
 
       await updateStats();
 
