@@ -5,7 +5,7 @@ import { type Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Stats Overlay",
-  description: "An overlay for the statistics of your system and other sources",
+  description: "Stats Overlay",
   icons: [{ rel: "icon", url: "/icon.svg" }],
 };
 
