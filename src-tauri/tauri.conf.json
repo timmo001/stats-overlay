@@ -20,7 +20,8 @@
         "alwaysOnTop": true,
         "decorations": false,
         "focus": false,
-        "fullscreen": true,
+        "fullscreen": false,
+        "maximized": true,
         "resizable": false,
         "shadow": false,
         "transparent": true
