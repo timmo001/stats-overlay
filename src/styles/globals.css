@@ -4,4 +4,5 @@
 
 :root {
   @apply bg-transparent text-slate-100;
+  user-select: none;
 }

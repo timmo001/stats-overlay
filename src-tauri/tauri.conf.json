@@ -24,6 +24,7 @@
         "maximized": true,
         "resizable": false,
         "shadow": false,
+        "skipTaskbar": true,
         "transparent": true
       },
       {
