@@ -115,7 +115,7 @@ export default function HomePage() {
   // TODO: Replace with shadcn spinner
   if (loadingState !== LoadingState.Loaded || !settings || !stats) return null;
 
-  const { cpu, memory } = stats;
+  const { usage, nvidia } = stats;
 
   return (
     <main className="flex min-h-screen w-full min-w-full flex-col items-start justify-between">
@@ -125,10 +125,17 @@ export default function HomePage() {
         </h2>
         <h2 className="text-end font-light tracking-tight">
           <span className="ms-1 text-sm">CPU: </span>
-          <span className="text-md font-semibold">{cpu}%</span>
+          <span className="text-md font-semibold">{usage.cpu}%</span>
           <span className="ms-3 text-sm">MEM: </span>
-          <span className="text-md font-semibold">{memory}%</span>
-          <br />
+          <span className="text-md font-semibold">{usage.memory}%</span>
+          {nvidia && (
+            <>
+              <br />
+              <span className="ms-1 text-sm">GPU: </span>
+              <span className="text-md font-semibold">{nvidia.usage}%</span>
+              <span className="ms-2 text-md font-semibold">{nvidia.temperature}°C</span>
+            </>
+          )}
         </h2>
       </section>
     </main>
