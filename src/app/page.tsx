@@ -19,7 +19,7 @@ export default function HomePage() {
     LoadingState.NotLoaded,
   );
   const [settings, setSettings] = useState<Settings>();
-  const [stats, setStats] = useState<Stats>({ cpu: -1, mem: -1 });
+  const [stats, setStats] = useState<Stats>();
 
   // async function hideWindow(): Promise<void> {
   //   console.log("Hiding window");
@@ -78,9 +78,9 @@ export default function HomePage() {
     );
 
   // TODO: Replace with shadcn spinner
-  if (loadingState !== LoadingState.Loaded || !settings) return null;
+  if (loadingState !== LoadingState.Loaded || !settings || !stats) return null;
 
-  const { cpu, mem } = stats;
+  const { avg, cpu, memory } = stats;
 
   return (
     <main className="flex min-h-screen w-full min-w-full flex-col items-start justify-between">
@@ -88,11 +88,14 @@ export default function HomePage() {
         <h2 className="text-xl font-extrabold tracking-tight">
           {/* <span className="text-indigo-800">Stats</span> Overlay */}
         </h2>
-        <h2 className="text-md font-light tracking-tight">
+        <h2 className="text-md text-end font-light tracking-tight">
           <span className="ms-1">CPU: </span>
           <span className="font-semibold">{cpu}%</span>
           <span className="ms-3">MEM: </span>
-          <span className="font-semibold">{mem}%</span>
+          <span className="font-semibold">{memory}%</span>
+          <br />
+          <span className="ms-1">AVG: </span>
+          <span className="font-semibold">{avg.one}%</span>
         </h2>
       </section>
     </main>

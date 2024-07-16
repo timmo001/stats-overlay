@@ -5,8 +5,10 @@ use tokio::time::{sleep, Duration};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Stats {
-    pub cpu: f64, // CPU Usage Percentage to 1 decimal place
-    pub memory: f64, // Memory Usage Percentage to 1 decimal place
+    /// CPU Usage Percentage (rounded to 1 decimal place)
+    pub cpu: f64,
+    /// Memory Usage Percentage (rounded to 1 decimal place)
+    pub memory: f64,
 }
 
 fn update_stats(sys: &System) -> Stats {
