@@ -44,6 +44,9 @@ export default function HomePage() {
     }
 
     await window.show();
+
+    await invoke("set_window", {});
+    console.log("Window set");
   }
 
   async function toggleWindow(): Promise<void> {
@@ -63,10 +66,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (loadingState > LoadingState.NotLoaded) return;
-    showWindow().then(async () => {
-      await invoke("set_window", {});
-      console.log("Window set");
-    });
+    showWindow();
     setLoadingState(LoadingState.Loading);
     invoke<Settings>("get_settings").then(async (newSettings: Settings) => {
       setSettings(newSettings);
@@ -83,16 +83,19 @@ export default function HomePage() {
         setStats(event.payload);
       });
 
-      listen<KeyboardShortcut>("shortcut-event", (event: Event<KeyboardShortcut>) => {
-        switch (event.payload) {
-          case KeyboardShortcut.Alt_S:
-            toggleWindow();
-            break;
-          default:
-            console.warn("Unknown shortcut", event.payload);
-            break;
-        }
-      });
+      listen<KeyboardShortcut>(
+        "shortcut-event",
+        (event: Event<KeyboardShortcut>) => {
+          switch (event.payload) {
+            case KeyboardShortcut.Alt_S:
+              toggleWindow();
+              break;
+            default:
+              console.warn("Unknown shortcut", event.payload);
+              break;
+          }
+        },
+      );
 
       setLoadingState(LoadingState.Loaded);
     });
