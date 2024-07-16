@@ -80,7 +80,7 @@ export default function HomePage() {
   // TODO: Replace with shadcn spinner
   if (loadingState !== LoadingState.Loaded || !settings || !stats) return null;
 
-  const { avg, cpu, memory } = stats;
+  const { cpu, memory } = stats;
 
   return (
     <main className="flex min-h-screen w-full min-w-full flex-col items-start justify-between">
@@ -88,14 +88,12 @@ export default function HomePage() {
         <h2 className="text-xl font-extrabold tracking-tight">
           {/* <span className="text-indigo-800">Stats</span> Overlay */}
         </h2>
-        <h2 className="text-md text-end font-light tracking-tight">
-          <span className="ms-1">CPU: </span>
-          <span className="font-semibold">{cpu}%</span>
-          <span className="ms-3">MEM: </span>
-          <span className="font-semibold">{memory}%</span>
+        <h2 className="text-end font-light tracking-tight">
+          <span className="ms-1 text-sm">CPU: </span>
+          <span className="text-md font-semibold">{cpu}%</span>
+          <span className="ms-3 text-sm">MEM: </span>
+          <span className="text-md font-semibold">{memory}%</span>
           <br />
-          <span className="ms-1">AVG: </span>
-          <span className="font-semibold">{avg.one}%</span>
         </h2>
       </section>
     </main>
