@@ -97,15 +97,7 @@ pub fn run() {
                 tray.set_menu(Some(menu))?;
                 tray.on_menu_event(move |app, event| match event.id().as_ref() {
                     "toggle_window" => {
-                        // Get the main window
-                        let main_window = app.get_webview_window("main").unwrap();
-
-                        // Toggle the window
-                        if main_window.is_visible().unwrap() {
-                            main_window.hide().unwrap();
-                        } else {
-                            main_window.emit("show", {}).unwrap();
-                        }
+                        let _ = app.emit("shortcut-event", "Alt+S");
                     }
                     "show_settings" => {
                         // Get the settings window
