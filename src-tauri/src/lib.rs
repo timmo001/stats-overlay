@@ -75,18 +75,37 @@ pub fn run() {
 
                 // Setup tray menu
                 let separator = PredefinedMenuItem::separator(app)?;
+                let toggle_window =
+                    MenuItemBuilder::with_id("toggle_window", "Show/Hide window").build(app)?;
                 let show_settings =
                     MenuItemBuilder::with_id("show_settings", "Open settings").build(app)?;
                 let exit = MenuItemBuilder::with_id("exit", "Exit").build(app)?;
 
                 let menu = MenuBuilder::new(app)
-                    .items(&[&show_settings, &separator, &exit])
+                    .items(&[
+                        &toggle_window,
+                        &separator,
+                        &show_settings,
+                        &separator,
+                        &exit,
+                    ])
                     .build()?;
 
                 // Setup tray icon
                 let tray = app.tray_by_id("main").unwrap();
                 tray.set_menu(Some(menu))?;
                 tray.on_menu_event(move |app, event| match event.id().as_ref() {
+                    "toggle_window" => {
+                        // Get the main window
+                        let main_window = app.get_webview_window("main").unwrap();
+
+                        // Toggle the window
+                        if main_window.is_visible().unwrap() {
+                            main_window.hide().unwrap();
+                        } else {
+                            main_window.emit("show", {}).unwrap();
+                        }
+                    }
                     "show_settings" => {
                         // Get the settings window
                         let settings_window = app.get_webview_window("settings").unwrap();

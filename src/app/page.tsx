@@ -57,6 +57,8 @@ export default function HomePage() {
       setStats(newStats);
       console.log("Initial stats", newStats);
 
+      listen("show", () => showWindow());
+
       listen<Stats>("stats", (event: Event<Stats>) => {
         // console.log("New stats", event.payload);
         setStats(event.payload);
