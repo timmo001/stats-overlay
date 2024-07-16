@@ -142,7 +142,9 @@ pub fn run() {
                         Ok(builder) => builder
                             .with_handler(|app, shortcut, event| {
                                 if event.state == ShortcutState::Pressed {
-                                    let _ = app.emit("shortcut-event", "Alt+S");
+                                    if shortcut.matches(Modifiers::ALT, Code::KeyS) {
+                                        let _ = app.emit("shortcut-event", "Alt+S");
+                                    }
                                 }
                             })
                             .build(),
