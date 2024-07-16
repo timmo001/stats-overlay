@@ -89,19 +89,19 @@ pub fn run() {
                 tray.on_menu_event(move |app, event| match event.id().as_ref() {
                     "show_settings" => {
                         // Get the settings window
-                        let window = app.get_webview_window("settings").unwrap();
+                        let settings_window = app.get_webview_window("settings").unwrap();
 
                         // Send the show event to the window
-                        window.emit("show", {}).unwrap();
+                        settings_window.emit("show", {}).unwrap();
 
                         // Open devtools on startup
                         #[cfg(debug_assertions)] // Only include this code on debug builds
                         {
-                            window.open_devtools();
+                            settings_window.open_devtools();
                         };
 
                         // Focus the window
-                        window.set_focus().unwrap();
+                        settings_window.set_focus().unwrap();
                     }
                     "exit" => {
                         std::process::exit(0);
