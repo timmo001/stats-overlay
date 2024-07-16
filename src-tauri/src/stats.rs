@@ -6,18 +6,18 @@ use tokio::time::{sleep, Duration};
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Stats {
     pub cpu: f64, // CPU Usage Percentage to 1 decimal place
-    pub mem: f64, // Memory Usage Percentage to 1 decimal place
+    pub memory: f64, // Memory Usage Percentage to 1 decimal place
 }
 
 fn update_stats(sys: &System) -> Stats {
     let cpu_info = sys.global_cpu_info();
 
     let cpu = cpu_info.cpu_usage() as f64;
-    let mem = (sys.used_memory() as f64 / sys.total_memory() as f64) * 100.0;
+    let memory = (sys.used_memory() as f64 / sys.total_memory() as f64) * 100.0;
 
     Stats {
         cpu: (cpu * 10.0).round() / 10.0,
-        mem: (mem * 10.0).round() / 10.0,
+        memory: (memory * 10.0).round() / 10.0,
     }
 }
 
