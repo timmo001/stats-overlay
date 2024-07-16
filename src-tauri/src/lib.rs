@@ -64,8 +64,6 @@ pub fn run() {
             update_settings
         ])
         .setup(|app| {
-            let main_window = app.get_webview_window("main").unwrap();
-
             // Setup autostart
             setup_autostart(app).unwrap();
 
@@ -119,6 +117,9 @@ pub fn run() {
             // Open devtools on startup
             #[cfg(debug_assertions)] // Only include this code on debug builds
             {
+                // Get the main window
+                let main_window = app.get_webview_window("main").unwrap();
+
                 // Open devtools
                 main_window.open_devtools();
             };
