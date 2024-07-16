@@ -70,7 +70,7 @@ pub fn run() {
             // Setup tray menu
             let separator = PredefinedMenuItem::separator(app)?;
             let toggle_window =
-                MenuItemBuilder::with_id("toggle_window", "Show/Hide window").build(app)?;
+                MenuItemBuilder::with_id("toggle_window", "Show/Hide window (Alt+S)").build(app)?;
             let show_settings =
                 MenuItemBuilder::with_id("show_settings", "Open settings").build(app)?;
             let exit = MenuItemBuilder::with_id("exit", "Exit").build(app)?;
