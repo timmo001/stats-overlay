@@ -40,10 +40,9 @@ export default function HomePage() {
 
     if (await window.isVisible()) {
       console.log("Window already visible");
-      return;
+    } else {
+      await window.show();
     }
-
-    await window.show();
 
     await invoke("set_window", {});
     console.log("Window set");
@@ -133,7 +132,9 @@ export default function HomePage() {
               <br />
               <span className="ms-1 text-sm">GPU: </span>
               <span className="text-md font-semibold">{nvidia.usage}%</span>
-              <span className="ms-2 text-md font-semibold">{nvidia.temperature}°C</span>
+              <span className="text-md ms-2 font-semibold">
+                {nvidia.temperature}°C
+              </span>
             </>
           )}
         </h2>
