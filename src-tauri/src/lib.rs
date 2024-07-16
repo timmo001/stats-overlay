@@ -64,11 +64,14 @@ pub fn run() {
         ])
         .setup(|app| {
             {
+                let main_window = app.get_webview_window("main").unwrap();
+
+                // Hide the windows on startup
+                main_window.hide().unwrap();
+                app.get_webview_window("settings").unwrap().hide().unwrap();
+
                 // Setup autostart
                 setup_autostart(app).unwrap();
-
-                // Hide the settings window
-                app.get_webview_window("settings").unwrap().hide().unwrap();
 
                 // Setup tray menu
                 let separator = PredefinedMenuItem::separator(app)?;
@@ -109,11 +112,8 @@ pub fn run() {
                 // Open devtools on startup
                 #[cfg(debug_assertions)] // Only include this code on debug builds
                 {
-                    // Get the main window
-                    let window = app.get_webview_window("main").unwrap();
-
                     // Open devtools
-                    window.open_devtools();
+                    main_window.open_devtools();
                 };
             }
             Ok(())
