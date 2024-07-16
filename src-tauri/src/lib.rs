@@ -66,10 +66,6 @@ pub fn run() {
         .setup(|app| {
             let main_window = app.get_webview_window("main").unwrap();
 
-            // Hide the windows on startup
-            main_window.hide().unwrap();
-            app.get_webview_window("settings").unwrap().hide().unwrap();
-
             // Setup autostart
             setup_autostart(app).unwrap();
 

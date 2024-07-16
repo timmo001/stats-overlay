@@ -25,7 +25,8 @@
         "resizable": false,
         "shadow": false,
         "skipTaskbar": true,
-        "transparent": true
+        "transparent": true,
+        "visible": false
       },
       {
         "label": "settings",
@@ -37,7 +38,8 @@
         "decorations": false,
         "focus": true,
         "shadow": false,
-        "transparent": true
+        "transparent": true,
+        "visible": false
       }
     ],
     "security": {
