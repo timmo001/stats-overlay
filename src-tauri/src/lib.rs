@@ -9,6 +9,7 @@ use tauri::{
     Emitter, Manager,
 };
 use tauri_plugin_autostart::MacosLauncher;
+use tauri_plugin_global_shortcut::{Code, Modifiers, ShortcutState};
 
 use crate::{
     autostart::setup_autostart,
@@ -134,6 +135,26 @@ pub fn run() {
                     // Open devtools
                     main_window.open_devtools();
                 };
+
+                // Setup hotkeys
+                app.handle().plugin(
+                    match tauri_plugin_global_shortcut::Builder::new().with_shortcuts(["alt+s"]) {
+                        Ok(builder) => builder
+                            .with_handler(|app, shortcut, event| {
+                                if event.state == ShortcutState::Pressed {
+                                    if shortcut.matches(Modifiers::ALT, Code::KeyS) {
+                                        let _ = app.emit("shortcut-event", "Alt+S");
+                                    }
+                                }
+                            })
+                            .build(),
+                        Err(e) => {
+                            // Log and return an empty builder
+                            log::error!("Error registering shortcut: {:?}", e);
+                            tauri_plugin_global_shortcut::Builder::new().build()
+                        }
+                    },
+                )?;
 
                 setup_stats_thread(app);
             }

@@ -14,6 +14,10 @@ enum LoadingState {
   Loaded = 1,
 }
 
+enum KeyboardShortcut {
+  Alt_S = "Alt+S",
+}
+
 export default function HomePage() {
   const [loadingState, setLoadingState] = useState<LoadingState>(
     LoadingState.NotLoaded,
@@ -21,10 +25,10 @@ export default function HomePage() {
   const [settings, setSettings] = useState<Settings>();
   const [stats, setStats] = useState<Stats>();
 
-  // async function hideWindow(): Promise<void> {
-  //   console.log("Hiding window");
-  //   await getCurrentWindow().hide();
-  // }
+  async function hideWindow(): Promise<void> {
+    console.log("Hiding window");
+    await getCurrentWindow().hide();
+  }
 
   async function showWindow(): Promise<void> {
     console.log("Showing window");
@@ -40,6 +44,21 @@ export default function HomePage() {
     }
 
     await window.show();
+  }
+
+  async function toggleWindow(): Promise<void> {
+    console.log("Toggling window");
+    const window = getCurrentWindow();
+    if (!window) {
+      console.error("Window not found");
+      return;
+    }
+
+    if (await window.isVisible()) {
+      await hideWindow();
+    } else {
+      await showWindow();
+    }
   }
 
   useEffect(() => {
@@ -62,6 +81,17 @@ export default function HomePage() {
       listen<Stats>("stats", (event: Event<Stats>) => {
         // console.log("New stats", event.payload);
         setStats(event.payload);
+      });
+
+      listen<KeyboardShortcut>("shortcut-event", (event: Event<KeyboardShortcut>) => {
+        switch (event.payload) {
+          case KeyboardShortcut.Alt_S:
+            toggleWindow();
+            break;
+          default:
+            console.warn("Unknown shortcut", event.payload);
+            break;
+        }
       });
 
       setLoadingState(LoadingState.Loaded);
