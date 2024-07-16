@@ -82,8 +82,8 @@ export default function HomePage() {
   const { cpu, mem } = stats;
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-start justify-between">
-      <section className="container flex w-full flex-row items-start justify-between gap-12 px-4 py-4">
+    <main className="flex min-h-screen w-full min-w-full flex-col items-start justify-between">
+      <section className="container flex w-full min-w-full flex-row items-start justify-between gap-12 px-4 py-4">
         <h2 className="text-xl font-extrabold tracking-tight">
           {/* <span className="text-indigo-800">Stats</span> Overlay */}
         </h2>
