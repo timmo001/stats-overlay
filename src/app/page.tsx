@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import { Event, listen } from "@tauri-apps/api/event";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 
 import { Settings } from "~/types/settings";
@@ -41,14 +42,6 @@ export default function HomePage() {
     await window.show();
   }
 
-  async function updateStats(): Promise<void> {
-    console.log("Update stats");
-
-    const newStats = await invoke<Stats>("get_stats", {});
-    setStats(newStats);
-    console.log("New stats", newStats);
-  }
-
   useEffect(() => {
     if (loadingState > LoadingState.NotLoaded) return;
     showWindow().then(async () => {
@@ -59,7 +52,15 @@ export default function HomePage() {
     invoke<Settings>("get_settings").then(async (newSettings: Settings) => {
       setSettings(newSettings);
 
-      await updateStats();
+      console.log("Get initial stats");
+      const newStats = await invoke<Stats>("get_stats", {});
+      setStats(newStats);
+      console.log("Initial stats", newStats);
+
+      listen<Stats>("stats", (event: Event<Stats>) => {
+        // console.log("New stats", event.payload);
+        setStats(event.payload);
+      });
 
       setLoadingState(LoadingState.Loaded);
     });

@@ -14,7 +14,7 @@ use crate::{
     autostart::setup_autostart,
     logger::setup_logger,
     settings::{get_settings, update_settings},
-    stats::get_stats,
+    stats::{get_stats, setup_stats_thread},
 };
 
 #[tauri::command]
@@ -115,6 +115,8 @@ pub fn run() {
                     // Open devtools
                     main_window.open_devtools();
                 };
+
+                setup_stats_thread(app);
             }
             Ok(())
         })
