@@ -23,8 +23,8 @@ fn update_stats(sys: &System) -> Stats {
 
 #[tauri::command]
 pub async fn get_stats() -> Result<Stats, String> {
-    let kind = RefreshKind::everything().without_processes();
-    let mut sys = System::new_with_specifics(kind);
+    let sys_kind = RefreshKind::everything().without_processes();
+    let mut sys = System::new_with_specifics(sys_kind);
 
     sys.refresh_all();
 
@@ -36,8 +36,8 @@ pub fn setup_stats_thread(app: &tauri::App) {
 
     // Start a thread to update the stats every second
     tokio::spawn(async move {
-        let kind = RefreshKind::everything().without_processes();
-        let mut sys = System::new_with_specifics(kind);
+        let sys_kind = RefreshKind::everything().without_processes();
+        let mut sys = System::new_with_specifics(sys_kind);
 
         loop {
             // Update stats
