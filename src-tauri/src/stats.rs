@@ -88,7 +88,7 @@ pub fn setup_stats_thread(app: &tauri::App) {
 
             // Sleep for one second. This yields control back to the tokio runtime
             // and allows other tasks to run.
-            sleep(Duration::from_secs(1)).await;
+            sleep(Duration::from_secs(2)).await;
         }
     });
 }
