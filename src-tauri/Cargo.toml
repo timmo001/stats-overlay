@@ -20,7 +20,7 @@ tauri-build = { version = "2.0.0-beta.19", features = [] }
 [dependencies]
 fern = { version = "0.6.2", features = ["colored"] }
 humantime = "2.1.0"
-log = "0.4.21"
+log = "0.4.26"
 nvml-wrapper = "0.10.0"
 platform-dirs = "0.3.0"
 serde = { version = "1.0.204", features = ["derive"] }
