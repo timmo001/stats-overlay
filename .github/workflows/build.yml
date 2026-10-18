@@ -62,7 +62,7 @@ jobs:
         with:
           targets: ${{ matrix.target }}
       - name: Rust cache
-        uses: swatinem/rust-cache@v2.7.3
+        uses: swatinem/rust-cache@v2.9.2
         with:
           workspaces: "./src-tauri -> target"
       - name: Install frontend dependencies
